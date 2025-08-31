@@ -1,7 +1,10 @@
 import requests
 
+# URL de l'API
 URL = "https://ourworldoftext.com/_/write"
-TEXT = "███████████████████████████████████████
+
+# Ton ASCII TROLL (triple guillemets pour plusieurs lignes)
+TEXT = """███████████████████████████████████████
 ████████████████████████████████████████
 █░▄▄░░▀█████████░▄▄░▄▄░██████▀░▄▄░██████
 █░██▄▄░▄▄░▄▄▄░▄▄░▄▄░██▄▄░░▄▄▄▄░██▄▄▄▄▀██
@@ -25,7 +28,7 @@ TEXT = "████████████████████████
 ████████▄▄▄▄▄▄░░░░░░▄▄▄▄▄▄██████████████
 ██████████████░░░░▄█████████████████████
 ████████████████████████████████████████
-████████████████████████████████████████"
+████████████████████████████████████████"""
 
 def write_char(x, y, ch):
     payload = {
@@ -46,9 +49,13 @@ def write_char(x, y, ch):
 def write_text(text, start_x=4, start_y=1):
     x, y = start_x, start_y
     for ch in text:
+        if ch == "\n":  # gestion du retour à la ligne
+            y += 1
+            x = start_x
+            continue
         write_char(x, y, ch)
         x += 1
 
 if __name__ == "__main__":
-    write_text(TEXT, 0, 0)
+    write_text(TEXT, start_x=4, start_y=1)
     print("✅ Message écrit avec succès !")
